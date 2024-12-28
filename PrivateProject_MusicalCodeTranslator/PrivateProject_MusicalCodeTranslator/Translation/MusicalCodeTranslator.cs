@@ -1,12 +1,12 @@
 ﻿namespace PrivateProject_MusicalCodeTranslator.Translation;
 
-public static class Translator
+public class MusicalCodeTranslator : ITranslator
 {
     private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
     private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
     private const int LengthOfMusicalAlphabet = 7;
 
-    public static string Encode(string original)
+    public string Encode(string original)
     {
         return string.Join("", original.Select(character =>
         {
@@ -25,7 +25,7 @@ public static class Translator
         }));
     }
 
-    public static string Decode(string original)
+    public string Decode(string original)
     {
         List<string> result = new List<string>();
 
