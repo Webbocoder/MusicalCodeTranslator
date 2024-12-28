@@ -41,13 +41,6 @@ public static class Translator
 
     public static string Decode(string original)
     {
-        //List<string> arrayOfEncodedStrings = SplitEncodedString(original);
-
-        //arrayOfEncodedStrings.Select(encodedString =>
-        //{
-
-        //});
-
         List<string> result = new List<string>();
 
         int counter = 0;
@@ -83,69 +76,4 @@ public static class Translator
 
         return string.Join("", result);
     }
-
-    //private static List<string> SplitEncodedString(string original)
-    //{
-    //    List<string> result = new List<string>();
-
-    //    int counter = 0;
-    //    while(counter < original.Length)
-    //    {
-    //        if (char.IsLetter(original[counter]) && char.IsDigit(original[counter + 1]))
-    //        {
-    //            result.Add($"{original[counter]}{original[counter + 1]}");
-
-    //            counter += 2;
-    //        }
-    //        else
-    //        {
-    //            result.Add(original[counter].ToString());
-    //            ++counter;
-    //        }
-    //    }
-
-    //    return result;
-    //}
-
-    //private static TTo TranslateIndividuals<TFrom, TTo>(TFrom original)
-    //{
-    //    ValidateTypes(typeof(TFrom), typeof(TTo));
-
-    //    Console.WriteLine("Types are deemed valid.");
-
-    //    // From full string to 
-
-    //    TTo result = default(TTo);
-
-    //    return result;
-    //}
-
-    //private static void ValidateTypes(Type tFrom, Type tTo)
-    //{
-    //    if(!(tFrom == typeof(char)) && !(tFrom == typeof(string)))
-    //    {
-    //        throw new InvalidOperationException("Original type (TFrom) is not a valid type (digit].e. char or string).");
-    //    }
-
-    //    if(!(tTo == typeof(char)) && !(tTo == typeof(string)))
-    //    {
-    //        throw new InvalidOperationException("Return type (TTo) is not a valid type (digit].e. char or string).");
-    //    }
-
-    //    if(tFrom == tTo)
-    //    {
-    //        throw new InvalidOperationException("TFrom and TTo cannot be the same type.");
-    //    }
-    //}
 }
-
-//public enum TranslationDirection
-//{
-//    encode,
-//    decode,
-//}
-
-//var translationDictionary = new Dictionary<char, string>
-//{
-//    ['a'] = "A0",
-//};
