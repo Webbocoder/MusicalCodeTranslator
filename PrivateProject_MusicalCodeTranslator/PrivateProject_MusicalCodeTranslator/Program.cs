@@ -13,36 +13,36 @@
 //var translateMe11 = "z" + new string('z', 100); // One character repeated to test large repetitions
 //var translateMe12 = ""; // Edge case: Empty string
 
-//string transation1 = MusicalCodeTranslator.Encode(translateMe1);
-//string transation2 = MusicalCodeTranslator.Encode(translateMe2);
-//string transation3 = MusicalCodeTranslator.Encode(translateMe3);
-//string transation4 = MusicalCodeTranslator.Encode(translateMe4);
-//string transation5 = MusicalCodeTranslator.Encode(translateMe5);
-//string transation6 = MusicalCodeTranslator.Encode(translateMe6);
-//string transation7 = MusicalCodeTranslator.Encode(translateMe7);
-//string transation8 = MusicalCodeTranslator.Encode(translateMe8);
-//string transation9 = MusicalCodeTranslator.Encode(translateMe9);
-//string transation10 = MusicalCodeTranslator.Encode(translateMe10);
-//string transation11 = MusicalCodeTranslator.Encode(translateMe11);
-//string transation12 = MusicalCodeTranslator.Encode(translateMe12);
+//string transation1 = TextToMusicalStringEncoder.Encode(translateMe1);
+//string transation2 = TextToMusicalStringEncoder.Encode(translateMe2);
+//string transation3 = TextToMusicalStringEncoder.Encode(translateMe3);
+//string transation4 = TextToMusicalStringEncoder.Encode(translateMe4);
+//string transation5 = TextToMusicalStringEncoder.Encode(translateMe5);
+//string transation6 = TextToMusicalStringEncoder.Encode(translateMe6);
+//string transation7 = TextToMusicalStringEncoder.Encode(translateMe7);
+//string transation8 = TextToMusicalStringEncoder.Encode(translateMe8);
+//string transation9 = TextToMusicalStringEncoder.Encode(translateMe9);
+//string transation10 = TextToMusicalStringEncoder.Encode(translateMe10);
+//string transation11 = TextToMusicalStringEncoder.Encode(translateMe11);
+//string transation12 = TextToMusicalStringEncoder.Encode(translateMe12);
 
-//string decoded1 = MusicalCodeTranslator.Decode(transation1);
-//string decoded2 = MusicalCodeTranslator.Decode(transation2);
-//string decoded3 = MusicalCodeTranslator.Decode(transation3);
-//string decoded4 = MusicalCodeTranslator.Decode(transation4);
-//string decoded5 = MusicalCodeTranslator.Decode(transation5);
-//string decoded6 = MusicalCodeTranslator.Decode(transation6);
-//string decoded7 = MusicalCodeTranslator.Decode(transation7);
-//string decoded8 = MusicalCodeTranslator.Decode(transation8);
-//string decoded9 = MusicalCodeTranslator.Decode(transation9);
-//string decoded10 = MusicalCodeTranslator.Decode(transation10);
-//string decoded11 = MusicalCodeTranslator.Decode(transation11);
-//string decoded12 = MusicalCodeTranslator.Decode(transation12);
+//string decoded1 = TextToMusicalStringEncoder.Decode(transation1);
+//string decoded2 = TextToMusicalStringEncoder.Decode(transation2);
+//string decoded3 = TextToMusicalStringEncoder.Decode(transation3);
+//string decoded4 = TextToMusicalStringEncoder.Decode(transation4);
+//string decoded5 = TextToMusicalStringEncoder.Decode(transation5);
+//string decoded6 = TextToMusicalStringEncoder.Decode(transation6);
+//string decoded7 = TextToMusicalStringEncoder.Decode(transation7);
+//string decoded8 = TextToMusicalStringEncoder.Decode(transation8);
+//string decoded9 = TextToMusicalStringEncoder.Decode(transation9);
+//string decoded10 = TextToMusicalStringEncoder.Decode(transation10);
+//string decoded11 = TextToMusicalStringEncoder.Decode(transation11);
+//string decoded12 = TextToMusicalStringEncoder.Decode(transation12);
 
 using PrivateProject_MusicalCodeTranslator.App;
 using PrivateProject_MusicalCodeTranslator.Translation;
 using PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-var translatorApp = new TranslatorApp(new TranslatorConsoleUserInteraction(), new MusicalCodeTranslator());
+var translatorApp = new MusicalCodeTranslatorApp(new TranslatorConsoleUserInteraction(), new TextToMusicalStringEncoder());
 
 translatorApp.Run();

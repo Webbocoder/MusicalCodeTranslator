@@ -3,15 +3,15 @@ using PrivateProject_MusicalCodeTranslator.UserInteraction;
 
 namespace PrivateProject_MusicalCodeTranslator.App;
 
-public class TranslatorApp
+public class MusicalCodeTranslatorApp
 {
     private readonly IUserInteration _userInteraction;
-    private readonly ITranslator _translator;
+    private readonly IBiDirectionalTranslator _textualTranslator;
 
-    public TranslatorApp(IUserInteration userInteraction, ITranslator translator)
+    public MusicalCodeTranslatorApp(IUserInteration userInteraction, IBiDirectionalTranslator textualTranslator)
     {
         _userInteraction = userInteraction;
-        _translator = translator;
+        _textualTranslator = textualTranslator;
     }
 
     public void Run()
@@ -24,7 +24,7 @@ public class TranslatorApp
             _userInteraction.ShowMessage("Okay!");
 
             var userInput = _userInteraction.AskForTextToTranslate(direction);
-            var translation = direction == TranslationDirection.Encode ? _translator.Encode(userInput) : _translator.Decode(userInput);
+            var translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(userInput) : _textualTranslator.Decode(userInput);
 
             _userInteraction.PrintTranslation(translation);
 

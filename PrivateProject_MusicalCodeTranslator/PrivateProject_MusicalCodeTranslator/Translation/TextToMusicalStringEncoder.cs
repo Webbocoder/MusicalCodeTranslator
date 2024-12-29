@@ -1,6 +1,6 @@
 ﻿namespace PrivateProject_MusicalCodeTranslator.Translation;
 
-public class MusicalCodeTranslator : ITranslator
+public class TextToMusicalStringEncoder : IBiDirectionalTranslator
 {
     private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
     private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
