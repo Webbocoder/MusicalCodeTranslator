@@ -5,7 +5,7 @@ namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 public interface IUserInteration
 {
     string AskForTextToTranslate(TranslationDirection direction);
-    bool AskToStartAgain();
+    bool AskYesNoQuestion(string message);
     TranslationDirection DetermineDirection();
     void Exit();
     void PrintEmptyLine();

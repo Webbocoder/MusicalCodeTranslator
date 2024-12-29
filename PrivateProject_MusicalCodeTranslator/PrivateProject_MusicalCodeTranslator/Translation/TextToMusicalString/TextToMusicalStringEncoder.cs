@@ -1,4 +1,4 @@
-﻿namespace PrivateProject_MusicalCodeTranslator.Translation;
+﻿namespace PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 
 public class TextToMusicalStringEncoder : IBiDirectionalTranslator
 {
@@ -47,7 +47,7 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
                 char[] alphabet = char.IsLower(currentCharacter) ? _lowercaseAlphabet : _uppercaseAlphabet;
                 int digit = (int)char.GetNumericValue(nextCharacter);
                 int indexOfLetter = Array.IndexOf(alphabet, currentCharacter);
-                var positionInAlphabet = (LengthOfMusicalAlphabet * digit) + indexOfLetter;
+                var positionInAlphabet = LengthOfMusicalAlphabet * digit + indexOfLetter;
 
                 result.Add(alphabet[positionInAlphabet].ToString());
 

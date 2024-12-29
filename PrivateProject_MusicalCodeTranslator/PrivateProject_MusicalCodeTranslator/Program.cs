@@ -40,9 +40,14 @@
 //string decoded12 = TextToMusicalStringEncoder.Decode(transation12);
 
 using PrivateProject_MusicalCodeTranslator.App;
-using PrivateProject_MusicalCodeTranslator.Translation;
+using PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 using PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-var translatorApp = new MusicalCodeTranslatorApp(new TranslatorConsoleUserInteraction(), new TextToMusicalStringEncoder());
+var translatorApp = new MusicalCodeTranslatorApp(
+    new TranslatorConsoleUserInteraction(),
+    new TextToMusicalStringEncoder(),
+    new MusicNoteToAudioTranslator(
+        new WindowsConsoleMusicNotePlayer()
+        ));
 
 translatorApp.Run();

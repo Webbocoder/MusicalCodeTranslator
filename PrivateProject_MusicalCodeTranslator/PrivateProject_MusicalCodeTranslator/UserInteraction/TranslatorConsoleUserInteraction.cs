@@ -30,7 +30,7 @@ public class TranslatorConsoleUserInteraction : IUserInteration
                     validResponse = true;
                     break;
                 default:
-                    ShowMessage(InvalidResponseMessage);
+                    ShowInvalidResponseMessage();
                     break;
             }
         }
@@ -54,12 +54,12 @@ public class TranslatorConsoleUserInteraction : IUserInteration
         PrintEmptyLine();
     }
 
-    public bool AskToStartAgain()
+    public bool AskYesNoQuestion(string question)
     {
-        ShowMessage("Would you like to try again?");
+        ShowMessage(question);
 
         var validResponse = false;
-        bool continueIterating = default;
+        bool answer = default;
 
         while (!validResponse)
         {
@@ -69,22 +69,35 @@ public class TranslatorConsoleUserInteraction : IUserInteration
             {
                 case "y":
                 case "yes":
-                    continueIterating = true;
+                    answer = true;
                     validResponse = true;
                     ClearConsole();
                     break;
                 case "n":
                 case "no":
-                    continueIterating = false;
+                    answer = false;
                     validResponse = true;
                     ClearConsole();
                     break;
                 default:
-                    ShowMessage(InvalidResponseMessage);
+                    ShowInvalidResponseMessage();
                     break;
             }
         }
-        return continueIterating;
+        return answer;
+    }
+
+    public void ShowInvalidResponseMessage()
+    {
+        PrintError(InvalidResponseMessage);
+    }
+
+    public void PrintError(string message)
+    {
+        var currentColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Red;
+        ShowMessage(message);
+        Console.ForegroundColor = currentColor;
     }
 
     public void ShowMessage(string message)
