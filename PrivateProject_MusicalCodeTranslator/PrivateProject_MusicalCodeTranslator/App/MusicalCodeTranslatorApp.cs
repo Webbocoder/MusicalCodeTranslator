@@ -40,7 +40,7 @@ public class MusicalCodeTranslatorApp
                 // Or could just do: _audioTranslator.PlayEncodedString(translation);
             }
 
-            continueIterating = _userInteraction.AskYesNoQuestion("Would you like to try again?");
+            continueIterating = _userInteraction.AskYesNoQuestion("Would you like to encode/decode something else?");
         }
 
         _userInteraction.Exit();
