@@ -126,4 +126,24 @@ public class TranslatorConsoleUserInteraction : IUserInteration
         ShowMessage("Press any key to exit.");
         Console.ReadKey();
     }
+
+    public int CollectInt(string message)
+    {
+        ShowMessage(message);
+
+        bool validResponse = false;
+        int parsedInt;
+
+        do
+        {
+            var userInput = FetchUserInput();
+            validResponse = int.TryParse(userInput, out parsedInt);
+            if(!validResponse)
+            {
+                ShowInvalidResponseMessage();
+            }
+        } while (!validResponse);
+
+        return parsedInt;
+    }
 }

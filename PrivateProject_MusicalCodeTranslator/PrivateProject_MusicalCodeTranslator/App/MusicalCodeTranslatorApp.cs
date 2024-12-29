@@ -9,6 +9,7 @@ public class MusicalCodeTranslatorApp
     private readonly IUserInteration _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
     private readonly IAudioTranslator _audioTranslator;
+    private const int DefaultTempoInBPM = 60;
 
     public MusicalCodeTranslatorApp(IUserInteration userInteraction, IBiDirectionalTranslator textualTranslator, IAudioTranslator audioTranslator)
     {
@@ -35,9 +36,17 @@ public class MusicalCodeTranslatorApp
 
             if (wantsToHear)
             {
-                List<MusicNote> notes = _audioTranslator.GenerateNotes(translation);
+                int tempo = DefaultTempoInBPM;
+                var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempo of {DefaultTempoInBPM}bpm?");
+
+                if(!usingDefaultTempo)
+                {
+                    tempo = _userInteraction.CollectInt("Please enter a tempo you would like: ");
+                }
+
+                List<MusicNote> notes = _audioTranslator.GenerateNotes(tempo, translation); // I believe the tempo will be needed for duration calculation.
                 _audioTranslator.PlayNotes(notes);
-                // Or could just do: _audioTranslator.PlayEncodedString(translation);
+                // Or could just do: _audioTranslator.PlayEncodedString(tempo, translation);
             }
 
             continueIterating = _userInteraction.AskYesNoQuestion("Would you like to encode/decode something else?");
@@ -50,7 +59,7 @@ public class MusicalCodeTranslatorApp
 
 public interface IAudioTranslator
 {
-    List<MusicNote> GenerateNotes(string translation);
+    List<MusicNote> GenerateNotes(int tempo, string translation);
     void PlayNotes(List<MusicNote> notes);
 }
 
@@ -75,7 +84,7 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
         _musicNotePlayer = musicNotePlayer;
     }
 
-    public List<MusicNote> GenerateNotes(string translation)
+    public List<MusicNote> GenerateNotes(int tempo, string translation)
     {
         throw new NotImplementedException();
     }

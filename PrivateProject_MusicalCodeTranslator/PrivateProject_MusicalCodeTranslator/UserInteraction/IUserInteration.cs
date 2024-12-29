@@ -6,6 +6,7 @@ public interface IUserInteration
 {
     string AskForTextToTranslate(TranslationDirection direction);
     bool AskYesNoQuestion(string message);
+    int CollectInt(string message);
     TranslationDirection DetermineDirection();
     void Exit();
     void PrintEmptyLine();
