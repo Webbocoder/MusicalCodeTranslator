@@ -23,13 +23,11 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         _frequencyCollection = GenerateFrequencies();
     }
 
-    public List<MusicalWord> TranslateToMusicalWords(int tempoInBPM, string musicallyEncodedString, string originalText)
+    public List<MusicalWord> TranslateToMusicalWords(int tempoInBPM, string musicallyEncodedString, string originalText, bool preservePunctuationInOriginal)
     {
         // Exclude punctuation (for now).
-        var musicallyEncodedWords = string.Join("", musicallyEncodedString.Where(character => char.IsLetterOrDigit(character) || character == ' ')).Split(" ");
-
-        // Don't need to remove puntuation from the original text.
-        var originalWords = originalText.Split(" ");
+        var musicallyEncodedWords = TranslateToPunctuationlessArrayOfWords(musicallyEncodedString);
+        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : TranslateToPunctuationlessArrayOfWords(originalText);
 
         List<MusicalWord> musicalWords = new List<MusicalWord>();
 
@@ -57,6 +55,11 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         }
 
         return musicalWords;
+    }
+
+    private string[] TranslateToPunctuationlessArrayOfWords(string @string)
+    {
+        return string.Join("", @string.Where(character => char.IsLetterOrDigit(character) || character == ' ')).Split(" ");
     }
 
     private double CalculateFrequency(char letter, int digit)

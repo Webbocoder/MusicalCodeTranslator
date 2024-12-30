@@ -54,7 +54,10 @@ public class MusicalCodeTranslatorApp
                         tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
                     }
 
-                    List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate);
+                    var preservePunctuationInOriginal = _userInteraction.AskYesNoQuestion(@"Would you like to preserve the punctuation in the original text as the words appear on-screen?
+Note: The playback ignores punctation for now.");
+
+                    List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate, preservePunctuationInOriginal);
 
                     bool wantsToHearAgain = true;
                     while(wantsToHearAgain)
