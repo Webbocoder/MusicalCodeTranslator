@@ -1,4 +1,4 @@
-﻿namespace PrivateProject_MusicalCodeTranslator.Translation;
+﻿namespace PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
 
 public static class TranslationDirectionExtensions
 {

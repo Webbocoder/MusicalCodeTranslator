@@ -1,4 +1,4 @@
-﻿using PrivateProject_MusicalCodeTranslator.Translation;
+﻿using PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
 
 namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 
