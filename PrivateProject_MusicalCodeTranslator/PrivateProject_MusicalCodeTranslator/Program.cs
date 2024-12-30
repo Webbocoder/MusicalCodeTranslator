@@ -43,11 +43,11 @@ using PrivateProject_MusicalCodeTranslator.App;
 using PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 using PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-var translatorApp = new MusicalCodeTranslatorApp(
+var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     new TranslatorConsoleUserInteraction(),
     new TextToMusicalStringEncoder(),
-    new MusicNoteToAudioTranslator(
-        new WindowsConsoleMusicNotePlayer()
-        ));
+    new MusicallyEncodedStringToFrequencyTranslator(),
+    new WindowsConsoleMusicNotePlayer()
+    );
 
-translatorApp.Run();
+musicalCodeTranslatorApp.Run();

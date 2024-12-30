@@ -8,14 +8,20 @@ public class MusicalCodeTranslatorApp
 {
     private readonly IUserInteration _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
-    private readonly IAudioTranslator _audioTranslator;
+    private readonly IMusicNoteConstructor _musicNoteConstructor;
+    private readonly IMusicNotePlayer _musicNotePlayer;
     private const int DefaultTempoInBPM = 60;
 
-    public MusicalCodeTranslatorApp(IUserInteration userInteraction, IBiDirectionalTranslator textualTranslator, IAudioTranslator audioTranslator)
+    public MusicalCodeTranslatorApp(
+        IUserInteration userInteraction,
+        IBiDirectionalTranslator textualTranslator,
+        IMusicNoteConstructor musicNoteConstructor,
+        IMusicNotePlayer musicNotePlayer)
     {
         _userInteraction = userInteraction;
         _textualTranslator = textualTranslator;
-        _audioTranslator = audioTranslator;
+        _musicNoteConstructor = musicNoteConstructor;
+        _musicNotePlayer = musicNotePlayer;
     }
 
     public void Run()
@@ -46,16 +52,16 @@ public class MusicalCodeTranslatorApp
                         tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
                     }
 
-                    List<MusicNote> notes = _audioTranslator.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
+                    List<MusicNote> notes = _musicNoteConstructor.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
 
                     bool wantsToHearAgain = true;
                     while(wantsToHearAgain)
                     {
-                        _audioTranslator.PlayNotes(notes);
+                        _musicNotePlayer.Play(notes);
 
                         wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
                     }
-                    // Or could just do: _audioTranslator.PlayEncodedString(tempoInBPM, translation);
+                    // Or could just do: _musicNoteConstructor.PlayEncodedString(tempoInBPM, translation);
                 }
             }
 
@@ -67,10 +73,10 @@ public class MusicalCodeTranslatorApp
 
 }
 
-public interface IAudioTranslator
+public interface IMusicNoteConstructor
 {
     List<MusicNote> GenerateNotes(int tempoInBPM, string translation);
-    void PlayNotes(List<MusicNote> notes);
+    //void PlayNotes(List<MusicNote> notes);
 }
 
 public class MusicNote
@@ -87,7 +93,7 @@ public class MusicNote
     public override string ToString() => $"{Frequency}:{Duration}";
 }
 
-public class MusicNoteToAudioTranslator : IAudioTranslator
+public class MusicallyEncodedStringToFrequencyTranslator : IMusicNoteConstructor
 {
     // Might break SRP(?) as not only plays the notes, but generates a frequency range too. Consider moving that logic into seperate class, or indeed write out the collection of frequencies manually.
     // Maybe this class can be MusicallyEncodedStringToFrequencyTranslator (or just MusicNoteConstructor (but it specifically translates from musically encoded strings)) then we can plug a _notePlayer (WindowsConsoleMusicNotePlayer) directly into MusicalCodeTranslatorApp and get rid of the PlayNotes method from this class and add it to IMusicNotePlayer and WindowsConsoleMusicNotePlayer.
@@ -106,9 +112,8 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
 
     private const int OneMinuteInMilliseconds = 60000;
 
-    public MusicNoteToAudioTranslator(IMusicNotePlayer musicNotePlayer)
+    public MusicallyEncodedStringToFrequencyTranslator()
     {
-        _musicNotePlayer = musicNotePlayer;
         _frequencyCollection = GenerateFrequencies();
     }
 
@@ -157,14 +162,6 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
         return duration;
     }
 
-    public void PlayNotes(List<MusicNote> notes)
-    {
-        foreach (MusicNote note in notes)
-        {
-            _musicNotePlayer.PlayNote(note);
-        }
-    }
-
     private List<double> GenerateFrequencies()
     {
         var frequencies = new List<double>() { DefaultStartingNoteFrequencyInHertz };
@@ -189,14 +186,23 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
 
 public interface IMusicNotePlayer
 {
-    void PlayNote(MusicNote note);
+    void Play(MusicNote note);
+    void Play(List<MusicNote> notes);
 }
 
 public class WindowsConsoleMusicNotePlayer : IMusicNotePlayer
 {
-    public void PlayNote(MusicNote note)
+    public void Play(MusicNote note)
     {
-        Console.WriteLine(note);
+        //Console.WriteLine(note);
         Console.Beep((int)note.Frequency, (int)note.Duration);
+    }
+
+    public void Play(List<MusicNote> notes)
+    {
+        foreach (MusicNote note in notes)
+        {
+            Play(note);
+        }
     }
 }
