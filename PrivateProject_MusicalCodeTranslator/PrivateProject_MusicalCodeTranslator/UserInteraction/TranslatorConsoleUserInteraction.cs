@@ -43,7 +43,25 @@ public class TranslatorConsoleUserInteraction : IUserInteration
     public string AskForTextToTranslate(TranslationDirection direction)
     {
         ShowMessage($"Please enter some text you would like to {direction.AsText()}:");
-        return FetchUserInput();
+
+        bool validResponse = false;
+        string userInput = default;
+
+        while (!validResponse)
+        {
+            userInput = FetchUserInput();
+
+            if(string.IsNullOrEmpty(userInput))
+            {
+                ShowInvalidResponseMessage();
+            }
+            else
+            {
+                validResponse = true;
+            }
+        }
+
+        return userInput;
     }
 
     public void PrintTranslation(string translation)
