@@ -1,6 +1,6 @@
 ﻿namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-public class BasicConsoleInteraction : IBasicUserInteraction
+public class BasicConsoleUserInteraction : IBasicUserInteraction
 {
     private const string InvalidResponseMessage = "Invalid response. Please try again.";
 

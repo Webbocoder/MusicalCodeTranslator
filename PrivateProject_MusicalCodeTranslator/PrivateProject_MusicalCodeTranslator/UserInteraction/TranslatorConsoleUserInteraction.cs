@@ -2,7 +2,7 @@
 
 namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-public class TranslatorConsoleUserInteraction : BasicConsoleInteraction, ITranslatorUserInteraction
+public class TranslatorConsoleUserInteraction : BasicConsoleUserInteraction, ITranslatorUserInteraction
 {
     public TranslationDirection DetermineDirection()
     {
