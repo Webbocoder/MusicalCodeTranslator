@@ -1,6 +1,6 @@
 ﻿using PrivateProject_MusicalCodeTranslator.Models;
 
-namespace PrivateProject_MusicalCodeTranslator.MusicalStringToMusicNote;
+namespace PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
 
 public interface IMusicNoteConstructor
 {

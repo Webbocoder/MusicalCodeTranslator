@@ -1,6 +1,4 @@
-﻿using PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
-
-namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
+﻿namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 
 public interface IBasicUserInteraction
 {

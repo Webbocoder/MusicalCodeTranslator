@@ -1,20 +1,14 @@
 ﻿using PrivateProject_MusicalCodeTranslator.Models;
 
-namespace PrivateProject_MusicalCodeTranslator.MusicalStringToMusicNote;
+namespace PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
 
 public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
 {
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
-    private const int LengthOfEnglishAlphabet = 26;
     private const int OneMinuteInMilliseconds = 60000;
 
     private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
     // When comparing each pair of notesForMusicalWord in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
-
-    private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-    private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-    private const int LengthOfMusicalAlphabet = 7;
-    // The above three are also located in TextToMusicalStringEncoder. Is there any way to reduce this duplication?
 
     private readonly List<double> _frequencyCollection;
 
@@ -64,8 +58,8 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
 
     private double CalculateFrequency(char letter, int digit)
     {
-        var alphabet = char.IsLower(letter) ? _lowercaseAlphabet : _uppercaseAlphabet;
-        int indexOfFrequency = LengthOfMusicalAlphabet * digit + Array.IndexOf(alphabet, letter);
+        var alphabet = char.IsLower(letter) ? EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet : EnglishAndMusicalAlphabetHelpers.UppercaseAlphabet;
+        int indexOfFrequency = EnglishAndMusicalAlphabetHelpers.LengthOfMusicalAlphabet * digit + Array.IndexOf(alphabet, letter);
         return _frequencyCollection[indexOfFrequency];
     }
 
@@ -85,7 +79,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         double twelfthRootOf2 = Math.Pow(2, 1.0 / 12); // For increasing by a semitone.
         double sixthRootOf2 = Math.Pow(2, 1.0 / 6); // For increasing by a whole tone.
 
-        for (int i = 1; i < LengthOfEnglishAlphabet; ++i)
+        for (int i = 1; i < EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet.Length; ++i)
         {
             if (_positionsOfSemitonesInRange.Contains(i))
             {

@@ -1,7 +1,7 @@
 ﻿using PrivateProject_MusicalCodeTranslator.Models;
-using PrivateProject_MusicalCodeTranslator.MusicalStringToMusicNote;
 using PrivateProject_MusicalCodeTranslator.NotePlayback;
-using PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
+using PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
+using PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 using PrivateProject_MusicalCodeTranslator.UserInteraction;
 
 namespace PrivateProject_MusicalCodeTranslator.App;

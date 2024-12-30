@@ -1,4 +1,4 @@
-﻿namespace PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
+﻿namespace PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 
 public interface IBiDirectionalTranslator
 {
