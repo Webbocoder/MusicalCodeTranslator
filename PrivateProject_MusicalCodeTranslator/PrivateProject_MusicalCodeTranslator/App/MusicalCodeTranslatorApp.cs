@@ -52,7 +52,7 @@ public class MusicalCodeTranslatorApp
                         tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
                     }
 
-                    List<MusicNote> notes = _musicNoteConstructor.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
+                    List<MusicNote> notes = _musicNoteConstructor.GenerateNotes(tempoInBPM, translation);
 
                     bool wantsToHearAgain = true;
                     while(wantsToHearAgain)
@@ -76,7 +76,6 @@ public class MusicalCodeTranslatorApp
 public interface IMusicNoteConstructor
 {
     List<MusicNote> GenerateNotes(int tempoInBPM, string translation);
-    //void PlayNotes(List<MusicNote> notes);
 }
 
 public class MusicNote
@@ -95,14 +94,13 @@ public class MusicNote
 
 public class MusicallyEncodedStringToFrequencyTranslator : IMusicNoteConstructor
 {
-    // Might break SRP(?) as not only plays the notes, but generates a frequency range too. Consider moving that logic into seperate class, or indeed write out the collection of frequencies manually.
-    // Maybe this class can be MusicallyEncodedStringToFrequencyTranslator (or just MusicNoteConstructor (but it specifically translates from musically encoded strings)) then we can plug a _notePlayer (WindowsConsoleMusicNotePlayer) directly into MusicalCodeTranslatorApp and get rid of the PlayNotes method from this class and add it to IMusicNotePlayer and WindowsConsoleMusicNotePlayer.
-
     private readonly IMusicNotePlayer _musicNotePlayer;
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int LengthOfEnglishAlphabet = 26;
+
     private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
     // When comparing each pair of notes in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
+
     private readonly List<double> _frequencyCollection;
 
     private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
