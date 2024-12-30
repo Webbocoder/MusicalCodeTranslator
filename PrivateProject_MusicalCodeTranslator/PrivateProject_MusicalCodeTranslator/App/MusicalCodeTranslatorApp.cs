@@ -120,22 +120,6 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
 
         List<MusicNote> notes = new List<MusicNote>();
 
-        // For each word, take each letter-number pair, then...
-        // CalculateDuration...
-            // noteFraction = (1.0 / 4.0) / word.Length;
-            //int duration = (int)(OneMinuteInMilliseconds / tempoInBPM * noteFraction);
-        // For each letter-number pair in the word...
-            // CalculateFrequency...
-                // Decide alphabet based on casing of letter of letter-number pair.
-                // indexOfFrequency = (LengthOfMusicalAlphabet * numberOfLetterNumberPair) + positionOfLetterOfLetterNumberPairWithinChosenAlphbet.
-                // frequency = _frequencyCollection[indexOfFrequency].
-
-        // Create MusicNote with above frequency and duration.
-        // Add to List<MusicNote>.
-
-        // Formula for converting tempoInBPM into durationInMilliseconds:
-        // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
-
         foreach(var word in words)
         {
             double duration = CalculateDuration(word, tempoInBPM);
@@ -165,7 +149,10 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
 
     private double CalculateDuration(string word, int tempoInBPM)
     {
-        var noteFraction = 1.0;
+        // Formula for converting tempoInBPM into durationInMilliseconds:
+        // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
+
+        var noteFraction = 1.0; // 1.0 = crotchets/quarter-notes; 1.0/2.0 = quaver/eighth-notes; 1.0/4.0 = semiquaver/sixteenth-notes ... 4.0 = semibreve/whole-notes.
         double duration = (OneMinuteInMilliseconds / (tempoInBPM * noteFraction)) / word.Length;
         return duration;
     }
