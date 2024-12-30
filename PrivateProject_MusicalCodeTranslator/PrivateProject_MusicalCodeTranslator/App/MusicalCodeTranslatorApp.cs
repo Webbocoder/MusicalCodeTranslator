@@ -1,4 +1,4 @@
-﻿using PrivateProject_MusicalCodeTranslator.Model;
+﻿using PrivateProject_MusicalCodeTranslator.Models;
 using PrivateProject_MusicalCodeTranslator.MusicalStringToMusicNote;
 using PrivateProject_MusicalCodeTranslator.NotePlayback;
 using PrivateProject_MusicalCodeTranslator.TextToMusicalStringTranslation;
@@ -35,8 +35,8 @@ public class MusicalCodeTranslatorApp
 
             _userInteraction.ShowMessage("Okay!");
 
-            var userInput = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
-            var translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(userInput) : _textualTranslator.Decode(userInput);
+            var textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
+            var translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(textToTranslate) : _textualTranslator.Decode(textToTranslate);
 
             _userInteraction.PrintTranslation(translation);
 
@@ -54,12 +54,12 @@ public class MusicalCodeTranslatorApp
                         tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
                     }
 
-                    List<MusicNote> notes = _musicNoteConstructor.GenerateNotes(tempoInBPM, translation);
+                    List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate);
 
                     bool wantsToHearAgain = true;
                     while(wantsToHearAgain)
                     {
-                        _musicNotePlayer.Play(notes);
+                        _musicNotePlayer.Play(musicalWords);
 
                         wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
                     }

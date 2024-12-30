@@ -1,4 +1,4 @@
-﻿using PrivateProject_MusicalCodeTranslator.Model;
+﻿using PrivateProject_MusicalCodeTranslator.Models;
 
 namespace PrivateProject_MusicalCodeTranslator.MusicalStringToMusicNote;
 
@@ -9,7 +9,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
     private const int OneMinuteInMilliseconds = 60000;
 
     private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
-    // When comparing each pair of notes in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
+    // When comparing each pair of notesForMusicalWord in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
 
     private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
     private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
@@ -23,16 +23,19 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         _frequencyCollection = GenerateFrequencies();
     }
 
-    public List<MusicNote> GenerateNotes(int tempoInBPM, string translation)
+    public List<MusicalWord> TranslateToMusicalWords(int tempoInBPM, string musicallyEncodedString, string originalText)
     {
         // Exclude punctuation (for now).
-        var alphanumericTranslation = string.Join("", translation.Where(character => char.IsLetterOrDigit(character) || character == ' '));
-        var words = alphanumericTranslation.Split(" ");
+        var musicallyEncodedWords = TranslateToPunctuationlessArrayOfWords(musicallyEncodedString);
+        var originalWords = TranslateToPunctuationlessArrayOfWords(originalText);
 
-        List<MusicNote> notes = new List<MusicNote>();
+        List<MusicalWord> musicalWords = new List<MusicalWord>();
 
-        foreach (var word in words)
+        for (int i = 0; i < musicallyEncodedWords.Length; i++)
         {
+            string word = musicallyEncodedWords[i];
+            List<MusicNote> notesForMusicalWord = new List<MusicNote>();
+
             double duration = CalculateDuration(word, tempoInBPM);
 
             int counter = 0;
@@ -42,13 +45,21 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
                 int digit = (int)char.GetNumericValue(word[counter + 1]);
                 double frequency = CalculateFrequency(letter, digit);
 
-                notes.Add(new MusicNote(frequency, duration));
+                notesForMusicalWord.Add(new MusicNote(frequency, duration));
 
                 counter += 2;
             }
+
+            var musicalWord = new MusicalWord(originalWords[i], word, notesForMusicalWord);
+            musicalWords.Add(musicalWord);
         }
 
-        return notes;
+        return musicalWords;
+    }
+
+    private string[] TranslateToPunctuationlessArrayOfWords(string @string)
+    {
+        return string.Join("", @string.Where(character => char.IsLetterOrDigit(character) || character == ' ')).Split(" ");
     }
 
     private double CalculateFrequency(char letter, int digit)
@@ -63,7 +74,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         // Formula for converting tempoInBPM into durationInMilliseconds:
         // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
 
-        var noteFraction = 1.0; // 1.0 = crotchets/quarter-notes; 1.0/2.0 = quaver/eighth-notes; 1.0/4.0 = semiquaver/sixteenth-notes ... 4.0 = semibreve/whole-notes.
+        var noteFraction = 1.0; // 1.0 = crotchets/quarter-notesForMusicalWord; 1.0/2.0 = quaver/eighth-notesForMusicalWord; 1.0/4.0 = semiquaver/sixteenth-notesForMusicalWord ... 4.0 = semibreve/whole-notesForMusicalWord.
         double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / (word.Length / 2);
         return duration;
     }

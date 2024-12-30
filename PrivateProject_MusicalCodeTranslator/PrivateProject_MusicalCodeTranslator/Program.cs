@@ -8,7 +8,7 @@ var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     new TranslatorConsoleUserInteraction(),
     new TextToMusicalStringEncoder(),
     new MusicalStringToMusicNoteTranslator(),
-    new WindowsConsoleMusicNotePlayer()
+    new WindowsConsoleMusicNotePlayer(new BasicConsoleUserInteraction())
     );
 
 musicalCodeTranslatorApp.Run();

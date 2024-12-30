@@ -1,4 +1,4 @@
-﻿namespace PrivateProject_MusicalCodeTranslator.Model;
+﻿namespace PrivateProject_MusicalCodeTranslator.Models;
 
 public class MusicNote
 {
