@@ -94,7 +94,6 @@ public class MusicNote
 
 public class MusicallyEncodedStringToFrequencyTranslator : IMusicNoteConstructor
 {
-    private readonly IMusicNotePlayer _musicNotePlayer;
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int LengthOfEnglishAlphabet = 26;
 
