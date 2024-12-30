@@ -96,18 +96,17 @@ public class MusicallyEncodedStringToFrequencyTranslator : IMusicNoteConstructor
 {
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int LengthOfEnglishAlphabet = 26;
+    private const int OneMinuteInMilliseconds = 60000;
 
     private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
     // When comparing each pair of notes in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
-
-    private readonly List<double> _frequencyCollection;
 
     private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
     private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
     private const int LengthOfMusicalAlphabet = 7;
     // The above three are also located in TextToMusicalStringEncoder. Is there any way to reduce this duplication?
 
-    private const int OneMinuteInMilliseconds = 60000;
+    private readonly List<double> _frequencyCollection;
 
     public MusicallyEncodedStringToFrequencyTranslator()
     {
