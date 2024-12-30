@@ -63,7 +63,6 @@ public class MusicalCodeTranslatorApp
 
                         wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
                     }
-                    // Or could just do: _musicNoteConstructor.PlayEncodedString(tempoInBPM, translation);
                 }
             }
 
