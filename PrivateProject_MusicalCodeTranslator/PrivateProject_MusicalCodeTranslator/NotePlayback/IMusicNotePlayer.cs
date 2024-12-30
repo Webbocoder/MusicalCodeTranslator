@@ -6,5 +6,5 @@ public interface IMusicNotePlayer
 {
     void Play(MusicNote note);
     void Play(List<MusicNote> notes);
-    void Play(List<MusicalWord> notes);
+    void PlayAndPrint(List<MusicalWord> notes);
 }

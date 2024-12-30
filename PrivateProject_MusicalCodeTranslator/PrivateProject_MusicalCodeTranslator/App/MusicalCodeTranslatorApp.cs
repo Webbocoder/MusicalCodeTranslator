@@ -62,7 +62,7 @@ Note: The playback ignores punctation for now.");
                     bool wantsToHearAgain = true;
                     while(wantsToHearAgain)
                     {
-                        _musicNotePlayer.Play(musicalWords);
+                        _musicNotePlayer.PlayAndPrint(musicalWords);
 
                         wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
                     }

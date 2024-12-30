@@ -26,7 +26,7 @@ public class WindowsConsoleMusicNotePlayer : IMusicNotePlayer
         }
     }
 
-    public void Play(List<MusicalWord> notes)
+    public void PlayAndPrint(List<MusicalWord> notes)
     {
         foreach(MusicalWord word in notes)
         {
