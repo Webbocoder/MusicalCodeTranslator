@@ -32,21 +32,31 @@ public class MusicalCodeTranslatorApp
 
             _userInteraction.PrintTranslation(translation);
 
-            var wantsToHear = _userInteraction.AskYesNoQuestion("Would you like to hear your creation?");
-
-            if (wantsToHear)
+            if(direction == TranslationDirection.Encode)
             {
-                int tempoInBPM = DefaultTempoInBPM;
-                var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
+                var wantsToHear = _userInteraction.AskYesNoQuestion("Would you like to hear your creation?");
 
-                if(!usingDefaultTempo)
+                if (wantsToHear)
                 {
-                    tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
-                }
+                    int tempoInBPM = DefaultTempoInBPM;
+                    var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
 
-                List<MusicNote> notes = _audioTranslator.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
-                _audioTranslator.PlayNotes(notes);
-                // Or could just do: _audioTranslator.PlayEncodedString(tempoInBPM, translation);
+                    if(!usingDefaultTempo)
+                    {
+                        tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
+                    }
+
+                    List<MusicNote> notes = _audioTranslator.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
+
+                    bool wantsToHearAgain = true;
+                    while(wantsToHearAgain)
+                    {
+                        _audioTranslator.PlayNotes(notes);
+
+                        wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
+                    }
+                    // Or could just do: _audioTranslator.PlayEncodedString(tempoInBPM, translation);
+                }
             }
 
             continueIterating = _userInteraction.AskYesNoQuestion("Would you like to encode/decode something else?");
