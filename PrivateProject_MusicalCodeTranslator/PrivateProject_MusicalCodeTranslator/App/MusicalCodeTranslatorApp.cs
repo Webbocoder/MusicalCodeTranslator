@@ -10,6 +10,7 @@ public class MusicalCodeTranslatorApp
 {
     private readonly ITranslatorUserInteraction _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
+    private readonly IFormatChecker _formatChecker;
     private readonly IMusicNoteConstructor _musicalWordsConstructor;
     private readonly IMusicNotePlayer _musicNotePlayer;
     private const int DefaultTempoInBPM = 60;
@@ -17,11 +18,13 @@ public class MusicalCodeTranslatorApp
     public MusicalCodeTranslatorApp(
         ITranslatorUserInteraction userInteraction,
         IBiDirectionalTranslator textualTranslator,
+        IFormatChecker formatChecker,
         IMusicNoteConstructor musicalWordsConstructor,
         IMusicNotePlayer musicNotePlayer)
     {
         _userInteraction = userInteraction;
         _textualTranslator = textualTranslator;
+        _formatChecker = formatChecker;
         _musicalWordsConstructor = musicalWordsConstructor;
         _musicNotePlayer = musicNotePlayer;
     }
@@ -49,7 +52,7 @@ public class MusicalCodeTranslatorApp
                 if
                 (
                     direction == TranslationDirection.Decode
-                    && !_textualTranslator.IsCorrectlyFormattedEncodedString(textToTranslate)
+                    && !_formatChecker.IsMusicallyEncodedString(textToTranslate)
                     && _userInteraction.AskYesNoQuestion("That string might not have been a correctly-formatted musically encoded string. Would you like to enter it again?"))
                 {
                     stillEnteringTextToTranslate = true;

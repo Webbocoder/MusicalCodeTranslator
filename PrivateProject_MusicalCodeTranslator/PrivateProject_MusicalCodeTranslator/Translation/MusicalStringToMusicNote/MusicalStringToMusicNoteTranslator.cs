@@ -8,7 +8,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
     private const int OneMinuteInMilliseconds = 60000;
 
     private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
-    // When comparing each pair of notesForMusicalWord in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
+    // When comparing each pair of notes in a 26-note range up from the second A below middle C, above are the pairs which are a semitone apart.
 
     private readonly List<double> _frequencyCollection;
 

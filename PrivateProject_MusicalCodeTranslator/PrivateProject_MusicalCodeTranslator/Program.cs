@@ -4,11 +4,15 @@ using PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 using PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
 using PrivateProject_MusicalCodeTranslator.NotePlayback;
 
+var translatorConsolUserInteraction = new TranslatorConsoleUserInteraction();
+
 var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
-    new TranslatorConsoleUserInteraction(),
+    translatorConsolUserInteraction,
     new TextToMusicalStringEncoder(),
+    new MusicalStringFormatChecker(),
     new MusicalStringToMusicNoteTranslator(),
-    new WindowsConsoleMusicNotePlayer(new BasicConsoleUserInteraction())
-    );
+    new WindowsConsoleMusicNotePlayer(
+        translatorConsolUserInteraction
+        ));
 
 musicalCodeTranslatorApp.Run();
