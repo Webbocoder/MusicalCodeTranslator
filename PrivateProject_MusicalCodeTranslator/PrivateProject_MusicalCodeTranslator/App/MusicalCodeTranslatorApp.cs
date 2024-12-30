@@ -36,17 +36,17 @@ public class MusicalCodeTranslatorApp
 
             if (wantsToHear)
             {
-                int tempo = DefaultTempoInBPM;
-                var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempo of {DefaultTempoInBPM}bpm?");
+                int tempoInBPM = DefaultTempoInBPM;
+                var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
 
                 if(!usingDefaultTempo)
                 {
-                    tempo = _userInteraction.CollectInt("Please enter a tempo you would like: ");
+                    tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
                 }
 
-                List<MusicNote> notes = _audioTranslator.GenerateNotes(tempo, translation); // I believe the tempo will be needed for duration calculation.
+                List<MusicNote> notes = _audioTranslator.GenerateNotes(tempoInBPM, translation); // I believe the tempoInBPM will be needed for duration calculation.
                 _audioTranslator.PlayNotes(notes);
-                // Or could just do: _audioTranslator.PlayEncodedString(tempo, translation);
+                // Or could just do: _audioTranslator.PlayEncodedString(tempoInBPM, translation);
             }
 
             continueIterating = _userInteraction.AskYesNoQuestion("Would you like to encode/decode something else?");
@@ -59,34 +59,105 @@ public class MusicalCodeTranslatorApp
 
 public interface IAudioTranslator
 {
-    List<MusicNote> GenerateNotes(int tempo, string translation);
+    List<MusicNote> GenerateNotes(int tempoInBPM, string translation);
     void PlayNotes(List<MusicNote> notes);
 }
 
 public class MusicNote
 {
-    public int Frequency { get; init; }
-    public int Duration { get; init; }
+    public double Frequency { get; init; }
+    public double Duration { get; init; }
 
-    public MusicNote(int frequency, int duration)
+    public MusicNote(double frequency, double duration)
     {
         Frequency = frequency;
         Duration = duration;
     }
+
+    public override string ToString() => $"{Frequency}:{Duration}";
 }
 
 public class MusicNoteToAudioTranslator : IAudioTranslator
 {
+    // Might break SRP(?) as not only plays the notes, but generates a frequency range too. Consider moving that logic into seperate class, or indeed write out the collection of frequencies manually.
+    // Maybe this class can be MusicallyEncodedStringToFrequencyTranslator (or just MusicNoteConstructor (but it specifically translates from musically encoded strings)) then we can plug a _notePlayer (WindowsConsoleMusicNotePlayer) directly into MusicalCodeTranslatorApp and get rid of the PlayNotes method from this class and add it to IMusicNotePlayer and WindowsConsoleMusicNotePlayer.
+
     private readonly IMusicNotePlayer _musicNotePlayer;
+    private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
+    private const int LengthOfEnglishAlphabet = 26;
+    private static readonly int[] _positionsOfSemitonesInRange = new[] { 2, 5, 9, 12, 16, 19, 23 };
+    // When comparing each pair of notes in a 26-note range from the second A below middle C, above are the pairs which are a semitone apart.
+    private readonly List<double> _frequencyCollection;
+
+    private static readonly char[] _lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+    private static readonly char[] _uppercaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    private const int LengthOfMusicalAlphabet = 7;
+    // The above three are also located in TextToMusicalStringEncoder. Is there any way to reduce this duplication?
+
+    private const int OneMinuteInMilliseconds = 60000;
 
     public MusicNoteToAudioTranslator(IMusicNotePlayer musicNotePlayer)
     {
         _musicNotePlayer = musicNotePlayer;
+        _frequencyCollection = GenerateFrequencies();
     }
 
-    public List<MusicNote> GenerateNotes(int tempo, string translation)
+    public List<MusicNote> GenerateNotes(int tempoInBPM, string translation)
     {
-        throw new NotImplementedException();
+        // Exclude punctuation (for now).
+        var alphanumericTranslation = string.Join("", translation.Where(character => char.IsLetterOrDigit(character) || character == ' '));
+        var words = alphanumericTranslation.Split(" ");
+
+        List<MusicNote> notes = new List<MusicNote>();
+
+        // For each word, take each letter-number pair, then...
+        // CalculateDuration...
+            // noteFraction = (1.0 / 4.0) / word.Length;
+            //int duration = (int)(OneMinuteInMilliseconds / tempoInBPM * noteFraction);
+        // For each letter-number pair in the word...
+            // CalculateFrequency...
+                // Decide alphabet based on casing of letter of letter-number pair.
+                // indexOfFrequency = (LengthOfMusicalAlphabet * numberOfLetterNumberPair) + positionOfLetterOfLetterNumberPairWithinChosenAlphbet.
+                // frequency = _frequencyCollection[indexOfFrequency].
+
+        // Create MusicNote with above frequency and duration.
+        // Add to List<MusicNote>.
+
+        // Formula for converting tempoInBPM into durationInMilliseconds:
+        // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
+
+        foreach(var word in words)
+        {
+            double duration = CalculateDuration(word, tempoInBPM);
+
+            int counter = 0;
+            while(counter < word.Length)
+            {
+                char letter = word[counter];
+                int digit = (int)char.GetNumericValue(word[counter + 1]);
+                double frequency = CalculateFrequency(letter, digit);
+
+                notes.Add(new MusicNote(frequency, duration));
+
+                counter += 2;
+            }
+        }
+
+        return notes;
+    }
+
+    private double CalculateFrequency(char letter, int digit)
+    {
+        var alphabet = char.IsLower(letter) ? _lowercaseAlphabet : _uppercaseAlphabet;
+        int indexOfFrequency = (LengthOfMusicalAlphabet * digit) + Array.IndexOf(alphabet, letter);
+        return _frequencyCollection[indexOfFrequency];
+    }
+
+    private double CalculateDuration(string word, int tempoInBPM)
+    {
+        var noteFraction = 1.0;
+        double duration = (OneMinuteInMilliseconds / (tempoInBPM * noteFraction)) / word.Length;
+        return duration;
     }
 
     public void PlayNotes(List<MusicNote> notes)
@@ -95,6 +166,27 @@ public class MusicNoteToAudioTranslator : IAudioTranslator
         {
             _musicNotePlayer.PlayNote(note);
         }
+    }
+
+    private List<double> GenerateFrequencies()
+    {
+        var frequencies = new List<double>() { DefaultStartingNoteFrequencyInHertz };
+        double twelfthRootOf2 = Math.Pow(2, 1.0 / 12); // For increasing by a semitone.
+        double sixthRootOf2 = Math.Pow(2, 1.0 / 6); // For increasing by a whole tone.
+
+        for (int i = 1; i < LengthOfEnglishAlphabet; ++i)
+        {
+            if (_positionsOfSemitonesInRange.Contains(i))
+            {
+                frequencies.Add(frequencies[i - 1] * twelfthRootOf2);
+            }
+            else
+            {
+                frequencies.Add(frequencies[i - 1] * sixthRootOf2);
+            }
+        }
+
+        return frequencies;
     }
 }
 
@@ -107,6 +199,7 @@ public class WindowsConsoleMusicNotePlayer : IMusicNotePlayer
 {
     public void PlayNote(MusicNote note)
     {
-        Console.Beep(note.Frequency, note.Duration);
+        Console.WriteLine(note);
+        Console.Beep((int)note.Frequency, (int)note.Duration);
     }
 }
