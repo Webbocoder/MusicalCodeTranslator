@@ -10,19 +10,19 @@ public class MusicalCodeTranslatorApp
 {
     private readonly ITranslatorUserInteraction _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
-    private readonly IMusicNoteConstructor _musicNoteConstructor;
+    private readonly IMusicNoteConstructor _musicalWordsConstructor;
     private readonly IMusicNotePlayer _musicNotePlayer;
     private const int DefaultTempoInBPM = 60;
 
     public MusicalCodeTranslatorApp(
         ITranslatorUserInteraction userInteraction,
         IBiDirectionalTranslator textualTranslator,
-        IMusicNoteConstructor musicNoteConstructor,
+        IMusicNoteConstructor musicalWordsConstructor,
         IMusicNotePlayer musicNotePlayer)
     {
         _userInteraction = userInteraction;
         _textualTranslator = textualTranslator;
-        _musicNoteConstructor = musicNoteConstructor;
+        _musicalWordsConstructor = musicalWordsConstructor;
         _musicNotePlayer = musicNotePlayer;
     }
 
@@ -71,7 +71,7 @@ public class MusicalCodeTranslatorApp
                 var preservePunctuationInOriginal = _userInteraction.AskYesNoQuestion(@"Would you like to preserve the punctuation in the original text as the words appear on-screen?
 Note: The playback ignores punctation for now.");
 
-                List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate, preservePunctuationInOriginal);
+                List<MusicalWord> musicalWords = _musicalWordsConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate, preservePunctuationInOriginal);
 
                 bool wantsToHearAgain = true;
                 while(wantsToHearAgain)

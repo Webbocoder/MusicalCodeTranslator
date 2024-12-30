@@ -16,10 +16,10 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
             char[] alphabet = char.IsLower(character) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
 
             var index = Array.IndexOf(alphabet, character);
-            var letter = alphabet[index % AlphabetHelpers.LengthOfMusicalAlphabet];
+            var musicalLetter = alphabet[index % AlphabetHelpers.LengthOfMusicalAlphabet];
             var number = index / AlphabetHelpers.LengthOfMusicalAlphabet;
 
-            return $"{letter}{number}";
+            return $"{musicalLetter}{number}";
         }));
     }
 
@@ -44,7 +44,7 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
             {
                 char[] alphabet = char.IsLower(currentCharacter) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
                 int digit = (int)char.GetNumericValue(nextCharacter);
-                int positionInMusicalAlphabet = Array.IndexOf(alphabet, currentCharacter); // positionInMusicalAlphabet == positionWithDigitAccountedFor as the letter will only be in range A to G.
+                int positionInMusicalAlphabet = Array.IndexOf(alphabet, currentCharacter); // positionInMusicalAlphabet == positionWithDigitAccountedFor as the musicalLetter will only be in range A to G.
                 var positionWithDigitAccountedFor = AlphabetHelpers.LengthOfMusicalAlphabet * digit + positionInMusicalAlphabet;
 
                 result.Add(alphabet[positionWithDigitAccountedFor].ToString());
@@ -66,7 +66,7 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
         // Remove punctuation and spaces.
         var stringWithNoSpacesNorPunctation = string.Join("", text.Where(char.IsLetterOrDigit));
 
-        // Check that Length is even number. If not, return false. Check that each pair is a letter and digit.
+        // Check that Length is even number. If not, return false. Check that each pair is a musicalLetter and digit.
         return stringWithNoSpacesNorPunctation.Length % 2 == 0 && Regex.IsMatch(stringWithNoSpacesNorPunctation, "^([A-Za-z][0-9])*$");
     }
 }
