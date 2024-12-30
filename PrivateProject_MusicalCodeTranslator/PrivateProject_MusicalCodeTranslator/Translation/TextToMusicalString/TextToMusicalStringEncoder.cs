@@ -6,16 +6,16 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
     {
         return string.Join("", original.Select(character =>
         {
-            if (!EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet.Contains(char.ToLower(character)))
+            if (!AlphabetHelpers.LowercaseEnglishAlphabet.Contains(char.ToLower(character)))
             {
                 return character.ToString();
             }
 
-            char[] alphabet = char.IsLower(character) ? EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet : EnglishAndMusicalAlphabetHelpers.UppercaseAlphabet;
+            char[] alphabet = char.IsLower(character) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
 
             var index = Array.IndexOf(alphabet, character);
-            var letter = alphabet[index % EnglishAndMusicalAlphabetHelpers.LengthOfMusicalAlphabet];
-            var number = index / EnglishAndMusicalAlphabetHelpers.LengthOfMusicalAlphabet;
+            var letter = alphabet[index % AlphabetHelpers.LengthOfMusicalAlphabet];
+            var number = index / AlphabetHelpers.LengthOfMusicalAlphabet;
 
             return $"{letter}{number}";
         }));
@@ -40,10 +40,10 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
 
             if (char.IsLetter(currentCharacter) && char.IsDigit(nextCharacter))
             {
-                char[] alphabet = char.IsLower(currentCharacter) ? EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet : EnglishAndMusicalAlphabetHelpers.UppercaseAlphabet;
+                char[] alphabet = char.IsLower(currentCharacter) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
                 int digit = (int)char.GetNumericValue(nextCharacter);
                 int indexOfLetter = Array.IndexOf(alphabet, currentCharacter);
-                var positionInAlphabet = EnglishAndMusicalAlphabetHelpers.LengthOfMusicalAlphabet * digit + indexOfLetter;
+                var positionInAlphabet = AlphabetHelpers.LengthOfMusicalAlphabet * digit + indexOfLetter;
 
                 result.Add(alphabet[positionInAlphabet].ToString());
 

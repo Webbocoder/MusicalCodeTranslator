@@ -58,8 +58,8 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
 
     private double CalculateFrequency(char letter, int digit)
     {
-        var alphabet = char.IsLower(letter) ? EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet : EnglishAndMusicalAlphabetHelpers.UppercaseAlphabet;
-        int indexOfFrequency = EnglishAndMusicalAlphabetHelpers.LengthOfMusicalAlphabet * digit + Array.IndexOf(alphabet, letter);
+        var alphabet = char.IsLower(letter) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
+        int indexOfFrequency = AlphabetHelpers.LengthOfMusicalAlphabet * digit + Array.IndexOf(alphabet, letter);
         return _frequencyCollection[indexOfFrequency];
     }
 
@@ -79,7 +79,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         double twelfthRootOf2 = Math.Pow(2, 1.0 / 12); // For increasing by a semitone.
         double sixthRootOf2 = Math.Pow(2, 1.0 / 6); // For increasing by a whole tone.
 
-        for (int i = 1; i < EnglishAndMusicalAlphabetHelpers.LowercaseAlphabet.Length; ++i)
+        for (int i = 1; i < AlphabetHelpers.LowercaseEnglishAlphabet.Length; ++i)
         {
             if (_positionsOfSemitonesInRange.Contains(i))
             {
