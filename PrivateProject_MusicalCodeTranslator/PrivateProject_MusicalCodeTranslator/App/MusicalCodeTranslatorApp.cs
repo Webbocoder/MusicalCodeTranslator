@@ -8,14 +8,14 @@ namespace PrivateProject_MusicalCodeTranslator.App;
 
 public class MusicalCodeTranslatorApp
 {
-    private readonly IUserInteration _userInteraction;
+    private readonly ITranslatorUserInteraction _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
     private readonly IMusicNoteConstructor _musicNoteConstructor;
     private readonly IMusicNotePlayer _musicNotePlayer;
     private const int DefaultTempoInBPM = 60;
 
     public MusicalCodeTranslatorApp(
-        IUserInteration userInteraction,
+        ITranslatorUserInteraction userInteraction,
         IBiDirectionalTranslator textualTranslator,
         IMusicNoteConstructor musicNoteConstructor,
         IMusicNotePlayer musicNotePlayer)
@@ -35,7 +35,7 @@ public class MusicalCodeTranslatorApp
 
             _userInteraction.ShowMessage("Okay!");
 
-            var userInput = _userInteraction.AskForTextToTranslate(direction);
+            var userInput = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
             var translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(userInput) : _textualTranslator.Decode(userInput);
 
             _userInteraction.PrintTranslation(translation);
@@ -69,7 +69,7 @@ public class MusicalCodeTranslatorApp
             continueIterating = _userInteraction.AskYesNoQuestion("Would you like to encode/decode something else?");
         }
 
-        _userInteraction.Exit();
+        _userInteraction.Exit("Musical Translator App");
     }
 
 }

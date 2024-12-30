@@ -2,14 +2,12 @@
 
 namespace PrivateProject_MusicalCodeTranslator.UserInteraction;
 
-public interface IUserInteration
+public interface IBasicUserInteraction
 {
-    string AskForTextToTranslate(TranslationDirection direction);
     bool AskYesNoQuestion(string message);
     int CollectInt(string message);
-    TranslationDirection DetermineDirection();
-    void Exit();
+    string CollectString(string message);
+    void Exit(string appName);
     void PrintEmptyLine();
-    void PrintTranslation(string translation);
     void ShowMessage(string message);
 }
