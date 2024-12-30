@@ -35,37 +35,50 @@ public class MusicalCodeTranslatorApp
 
             _userInteraction.ShowMessage("Okay!");
 
-            var textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
-            var translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(textToTranslate) : _textualTranslator.Decode(textToTranslate);
+            var stillEnteringTextToTranslate = false;
+            string textToTranslate = default;
+            string translation = default;
 
-            _userInteraction.PrintTranslation(translation);
-
-            if(direction == TranslationDirection.Encode)
+            do
             {
-                var wantsToHear = _userInteraction.AskYesNoQuestion("Would you like to hear your creation?");
+                textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
+                translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(textToTranslate) : _textualTranslator.Decode(textToTranslate);
 
-                if (wantsToHear)
+                _userInteraction.PrintTranslation(translation);
+
+                if
+                (
+                    direction == TranslationDirection.Decode
+                    && !_textualTranslator.IsCorrectlyFormattedEncodedString(textToTranslate)
+                    && _userInteraction.AskYesNoQuestion("That string might not have been a correctly-formatted musically encoded string. Would you like to enter it again?"))
                 {
-                    int tempoInBPM = DefaultTempoInBPM;
-                    var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
+                    stillEnteringTextToTranslate = true;
+                }
 
-                    if(!usingDefaultTempo)
-                    {
-                        tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
-                    }
+            } while (stillEnteringTextToTranslate);
 
-                    var preservePunctuationInOriginal = _userInteraction.AskYesNoQuestion(@"Would you like to preserve the punctuation in the original text as the words appear on-screen?
+
+            if(direction == TranslationDirection.Encode && _userInteraction.AskYesNoQuestion("Would you like to hear your creation?"))
+            {
+                int tempoInBPM = DefaultTempoInBPM;
+                var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
+
+                if(!usingDefaultTempo)
+                {
+                    tempoInBPM = _userInteraction.CollectInt("Please enter a tempoInBPM you would like: ");
+                }
+
+                var preservePunctuationInOriginal = _userInteraction.AskYesNoQuestion(@"Would you like to preserve the punctuation in the original text as the words appear on-screen?
 Note: The playback ignores punctation for now.");
 
-                    List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate, preservePunctuationInOriginal);
+                List<MusicalWord> musicalWords = _musicNoteConstructor.TranslateToMusicalWords(tempoInBPM, translation, textToTranslate, preservePunctuationInOriginal);
 
-                    bool wantsToHearAgain = true;
-                    while(wantsToHearAgain)
-                    {
-                        _musicNotePlayer.PlayAndPrint(musicalWords);
+                bool wantsToHearAgain = true;
+                while(wantsToHearAgain)
+                {
+                    _musicNotePlayer.PlayAndPrint(musicalWords);
 
-                        wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
-                    }
+                    wantsToHearAgain = _userInteraction.AskYesNoQuestion("Would you like to hear that again?");
                 }
             }
 

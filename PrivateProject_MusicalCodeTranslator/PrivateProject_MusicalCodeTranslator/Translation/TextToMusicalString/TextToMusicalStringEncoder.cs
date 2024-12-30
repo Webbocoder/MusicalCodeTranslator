@@ -1,4 +1,6 @@
-﻿namespace PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
+﻿using System.Text.RegularExpressions;
+
+namespace PrivateProject_MusicalCodeTranslator.Translation.TextToMusicalString;
 
 public class TextToMusicalStringEncoder : IBiDirectionalTranslator
 {
@@ -42,10 +44,10 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
             {
                 char[] alphabet = char.IsLower(currentCharacter) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
                 int digit = (int)char.GetNumericValue(nextCharacter);
-                int indexOfLetter = Array.IndexOf(alphabet, currentCharacter);
-                var positionInAlphabet = AlphabetHelpers.LengthOfMusicalAlphabet * digit + indexOfLetter;
+                int positionInMusicalAlphabet = Array.IndexOf(alphabet, currentCharacter); // positionInMusicalAlphabet == positionWithDigitAccountedFor as the letter will only be in range A to G.
+                var positionWithDigitAccountedFor = AlphabetHelpers.LengthOfMusicalAlphabet * digit + positionInMusicalAlphabet;
 
-                result.Add(alphabet[positionInAlphabet].ToString());
+                result.Add(alphabet[positionWithDigitAccountedFor].ToString());
 
                 counter += 2;
             }
@@ -57,5 +59,14 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
         }
 
         return string.Join("", result);
+    }
+
+    public bool IsCorrectlyFormattedEncodedString(string text)
+    {
+        // Remove punctuation and spaces.
+        var stringWithNoSpacesNorPunctation = string.Join("", text.Where(char.IsLetterOrDigit));
+
+        // Check that Length is even number. If not, return false. Check that each pair is a letter and digit.
+        return stringWithNoSpacesNorPunctation.Length % 2 == 0 && Regex.IsMatch(stringWithNoSpacesNorPunctation, "^([A-Za-z][0-9])*$");
     }
 }
