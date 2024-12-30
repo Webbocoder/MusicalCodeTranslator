@@ -64,7 +64,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
         // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
 
         var noteFraction = 1.0; // 1.0 = crotchets/quarter-notes; 1.0/2.0 = quaver/eighth-notes; 1.0/4.0 = semiquaver/sixteenth-notes ... 4.0 = semibreve/whole-notes.
-        double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / word.Length;
+        double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / (word.Length / 2);
         return duration;
     }
 
