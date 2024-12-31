@@ -45,23 +45,22 @@ public class MusicalCodeTranslatorApp
             do
             {
                 textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
-                translation = direction == TranslationDirection.Encode ? _textualTranslator.Encode(textToTranslate) : _textualTranslator.Decode(textToTranslate);
+                translation = direction == TranslationDirection.Encode
+                    ? _textualTranslator.Encode(textToTranslate)
+                    : _textualTranslator.Decode(textToTranslate);
 
                 _userInteraction.PrintTranslation(translation);
 
-                if
-                (
-                    direction == TranslationDirection.Decode
-                    && !_formatChecker.IsMusicallyEncodedString(textToTranslate)
-                    && _userInteraction.AskYesNoQuestion("That string might not have been a correctly-formatted musically encoded string. Would you like to enter it again?"))
+                stillEnteringTextToTranslate = direction == TranslationDirection.Decode && !_formatChecker.IsMusicallyEncodedString(textToTranslate);
+
+                if (stillEnteringTextToTranslate)
                 {
-                    stillEnteringTextToTranslate = true;
+                    stillEnteringTextToTranslate = _userInteraction.AskYesNoQuestion("That string might not have been a correctly-formatted musically encoded string. Would you like to enter it again?");
                 }
 
             } while (stillEnteringTextToTranslate);
 
-
-            if(direction == TranslationDirection.Encode && _userInteraction.AskYesNoQuestion("Would you like to hear your creation?"))
+            if (direction == TranslationDirection.Encode && _userInteraction.AskYesNoQuestion("Would you like to hear your creation?"))
             {
                 int tempoInBPM = DefaultTempoInBPM;
                 var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");
