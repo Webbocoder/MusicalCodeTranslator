@@ -39,7 +39,7 @@ public class BasicConsoleUserInteraction : IBasicUserInteraction
         {
             var userDecision = FetchUserInput();
 
-            switch (userDecision.ToLower())
+            switch (userDecision.ToLower().Trim())
             {
                 case "y":
                 case "yes":

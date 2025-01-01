@@ -15,7 +15,7 @@ public class TranslatorConsoleUserInteraction : BasicConsoleUserInteraction, ITr
         {
             userDecision = FetchUserInput();
 
-            switch (userDecision.ToLower())
+            switch (userDecision.ToLower().Trim())
             {
                 case "e":
                 case "encode":
