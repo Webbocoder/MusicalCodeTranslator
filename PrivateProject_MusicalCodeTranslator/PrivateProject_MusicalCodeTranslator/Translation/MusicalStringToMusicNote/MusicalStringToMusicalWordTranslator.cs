@@ -5,9 +5,9 @@ namespace PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicN
 
 public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 {
-    private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int OneMinuteInMilliseconds = 60000;
-    private readonly List<int> SemitonePairsForAToA = new List<int>() { 2, 5 };
+    private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
+    private readonly List<int> SemitonePairsForAToA = new List<int>() { 2, 5 }; // In one octave from A to A, semitones occur between the 2nd and 5th pairs of notes.
 
     private readonly IFrequencyRangeGenerator _frequencyRangeGenerator;
 
