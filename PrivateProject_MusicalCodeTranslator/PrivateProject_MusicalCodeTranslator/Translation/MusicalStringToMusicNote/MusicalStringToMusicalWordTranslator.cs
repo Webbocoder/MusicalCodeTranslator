@@ -72,8 +72,17 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         // Formula for converting tempoInBPM into durationInMilliseconds:
         // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
 
-        var noteFraction = 1.0; // 1.0 = crotchets/quarter-notesForMusicalWord; 1.0/2.0 = quaver/eighth-notesForMusicalWord; 1.0/4.0 = semiquaver/sixteenth-notesForMusicalWord ... 4.0 = semibreve/whole-notesForMusicalWord.
-        double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / (musicallyEncodedWord.Length / 2);
+        // moteFraction:
+        // 4.0 = semibreve / whole-note.
+        // 2.0 = minim / half-note.
+        // 1.0 = crotchets / quarter-note.
+        // 1.0/2.0 = quaver / eighth-note.
+        // 1.0/4.0 = semiquaver / sixteenth-note.
+
+        var noteFraction = 1.0;
+        var oneBeatInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
+        var lengthOfOriginalWord = musicallyEncodedWord.Length / 2;
+        double duration = oneBeatInMilliseconds / lengthOfOriginalWord;
         return duration;
     }
 }
