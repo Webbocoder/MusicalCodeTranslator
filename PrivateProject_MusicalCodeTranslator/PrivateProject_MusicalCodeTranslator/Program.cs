@@ -10,9 +10,7 @@ var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     translatorConsolUserInteraction,
     new TextToMusicalStringEncoder(),
     new MusicalStringFormatChecker(),
-    new MusicalStringToMusicNoteTranslator(),
-    new WindowsConsoleMusicNotePlayer(
-        translatorConsolUserInteraction
-        ));
+    new MusicalStringToMusicNoteTranslator(new FrequencyRangeGenerator()),
+    new WindowsConsoleMusicNotePlayer(translatorConsolUserInteraction));
 
 musicalCodeTranslatorApp.Run();
