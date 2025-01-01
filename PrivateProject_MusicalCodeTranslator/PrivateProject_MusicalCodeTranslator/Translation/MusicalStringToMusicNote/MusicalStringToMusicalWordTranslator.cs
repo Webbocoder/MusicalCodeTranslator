@@ -31,16 +31,16 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 
         for (int i = 0; i < musicallyEncodedWords.Length; i++)
         {
-            string word = musicallyEncodedWords[i];
+            string musicallyEncodedWord = musicallyEncodedWords[i];
             List<MusicNote> notesForMusicalWord = new List<MusicNote>();
 
-            double duration = CalculateDuration(word, tempoInBPM);
+            double duration = CalculateDuration(musicallyEncodedWord, tempoInBPM);
 
             int counter = 0;
-            while (counter < word.Length)
+            while (counter < musicallyEncodedWord.Length)
             {
-                char letter = word[counter];
-                int digit = (int)char.GetNumericValue(word[counter + 1]);
+                char letter = musicallyEncodedWord[counter];
+                int digit = (int)char.GetNumericValue(musicallyEncodedWord[counter + 1]);
                 double frequency = CalculateFrequency(letter, digit, frequencyCollection);
 
                 notesForMusicalWord.Add(new MusicNote(frequency, duration));
@@ -48,7 +48,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
                 counter += 2;
             }
 
-            var musicalWord = new MusicalWord(originalWords[i], word, notesForMusicalWord);
+            var musicalWord = new MusicalWord(originalWords[i], musicallyEncodedWord, notesForMusicalWord);
             musicalWords.Add(musicalWord);
         }
 
@@ -67,13 +67,13 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         return frequencyCollection[indexOfFrequency];
     }
 
-    private double CalculateDuration(string word, int tempoInBPM)
+    private double CalculateDuration(string musicallyEncodedWord, int tempoInBPM)
     {
         // Formula for converting tempoInBPM into durationInMilliseconds:
         // durationInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
 
         var noteFraction = 1.0; // 1.0 = crotchets/quarter-notesForMusicalWord; 1.0/2.0 = quaver/eighth-notesForMusicalWord; 1.0/4.0 = semiquaver/sixteenth-notesForMusicalWord ... 4.0 = semibreve/whole-notesForMusicalWord.
-        double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / (word.Length / 2);
+        double duration = OneMinuteInMilliseconds / (tempoInBPM * noteFraction) / (musicallyEncodedWord.Length / 2);
         return duration;
     }
 }
