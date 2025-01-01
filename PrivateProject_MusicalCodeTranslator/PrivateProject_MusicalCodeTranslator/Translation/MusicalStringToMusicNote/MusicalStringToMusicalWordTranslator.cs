@@ -7,7 +7,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 {
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int OneMinuteInMilliseconds = 60000;
-    private readonly List<int> SemitonPairsForAToA = new List<int>() { 2, 5 };
+    private readonly List<int> SemitonePairsForAToA = new List<int>() { 2, 5 };
 
     private readonly IFrequencyRangeGenerator _frequencyRangeGenerator;
 
@@ -19,7 +19,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
     public List<MusicalWord> TranslateToMusicalWords(int tempoInBPM, string musicallyEncodedString, string originalText, bool preservePunctuationInOriginal)
     {
         var frequencyCollection = _frequencyRangeGenerator.Generate(
-            SemitonPairsForAToA,
+            SemitonePairsForAToA,
             DefaultStartingNoteFrequencyInHertz,
             AlphabetHelpers.LowercaseEnglishAlphabet.Length);
 
