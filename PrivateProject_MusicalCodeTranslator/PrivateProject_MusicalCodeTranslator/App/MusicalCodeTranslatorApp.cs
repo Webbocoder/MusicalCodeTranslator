@@ -44,7 +44,7 @@ public class MusicalCodeTranslatorApp
 
             do
             {
-                textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:");
+                textToTranslate = _userInteraction.CollectString($"Please enter some text you would like to {direction.AsText()}:").Trim();
                 translation = direction == TranslationDirection.Encode
                     ? _textualTranslator.Encode(textToTranslate)
                     : _textualTranslator.Decode(textToTranslate);
