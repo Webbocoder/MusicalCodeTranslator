@@ -3,7 +3,7 @@ using PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote.
 
 namespace PrivateProject_MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
 
-public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
+public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 {
     private const double DefaultStartingNoteFrequencyInHertz = 110; // Second A below middle C.
     private const int OneMinuteInMilliseconds = 60000;
@@ -11,7 +11,7 @@ public class MusicalStringToMusicNoteTranslator : IMusicNoteConstructor
 
     private readonly IFrequencyRangeGenerator _frequencyRangeGenerator;
 
-    public MusicalStringToMusicNoteTranslator(IFrequencyRangeGenerator frequencyRangeGenerator)
+    public MusicalStringToMusicalWordTranslator(IFrequencyRangeGenerator frequencyRangeGenerator)
     {
         _frequencyRangeGenerator = frequencyRangeGenerator;
     }

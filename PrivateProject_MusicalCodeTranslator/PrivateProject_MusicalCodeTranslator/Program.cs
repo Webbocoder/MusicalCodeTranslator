@@ -11,7 +11,7 @@ var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     translatorConsolUserInteraction,
     new TextToMusicalStringEncoder(),
     new MusicalStringFormatChecker(),
-    new MusicalStringToMusicNoteTranslator(new FrequencyRangeGenerator()),
+    new MusicalStringToMusicalWordTranslator(new FrequencyRangeGenerator()),
     new WindowsConsoleMusicNotePlayer(translatorConsolUserInteraction));
 
 musicalCodeTranslatorApp.Run();

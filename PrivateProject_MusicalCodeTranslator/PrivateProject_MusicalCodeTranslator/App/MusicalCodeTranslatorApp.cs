@@ -11,7 +11,7 @@ public class MusicalCodeTranslatorApp
     private readonly ITranslatorUserInteraction _userInteraction;
     private readonly IBiDirectionalTranslator _textualTranslator;
     private readonly IFormatChecker _formatChecker;
-    private readonly IMusicNoteConstructor _musicalWordsConstructor;
+    private readonly IMusicalWordConstructor _musicalWordsConstructor;
     private readonly IMusicNotePlayer _musicNotePlayer;
     private const int DefaultTempoInBPM = 60;
 
@@ -19,7 +19,7 @@ public class MusicalCodeTranslatorApp
         ITranslatorUserInteraction userInteraction,
         IBiDirectionalTranslator textualTranslator,
         IFormatChecker formatChecker,
-        IMusicNoteConstructor musicalWordsConstructor,
+        IMusicalWordConstructor musicalWordsConstructor,
         IMusicNotePlayer musicNotePlayer)
     {
         _userInteraction = userInteraction;
