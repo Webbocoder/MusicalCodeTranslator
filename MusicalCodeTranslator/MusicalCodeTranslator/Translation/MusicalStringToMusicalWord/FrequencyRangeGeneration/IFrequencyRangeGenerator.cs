@@ -1,4 +1,4 @@
-﻿namespace MusicalCodeTranslator.Translation.MusicalStringToMusicNote.FrequencyRangeGeneration;
+﻿namespace MusicalCodeTranslator.Translation.MusicalStringToMusicalWord.FrequencyRangeGeneration;
 
 public interface IFrequencyRangeGenerator
 {

@@ -1,6 +1,6 @@
 ﻿using MusicalCodeTranslator.Models;
 using MusicalCodeTranslator.NotePlayback;
-using MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
+using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
 using MusicalCodeTranslator.Translation.TextToMusicalString;
 using MusicalCodeTranslator.UserInteraction;
 

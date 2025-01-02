@@ -1,6 +1,6 @@
 ﻿using MusicalCodeTranslator.Models;
 
-namespace MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
+namespace MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
 
 public interface IMusicalWordConstructor
 {

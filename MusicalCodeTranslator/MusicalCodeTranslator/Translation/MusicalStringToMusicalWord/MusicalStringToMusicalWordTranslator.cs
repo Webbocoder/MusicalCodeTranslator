@@ -1,7 +1,7 @@
 ﻿using MusicalCodeTranslator.Models;
-using MusicalCodeTranslator.Translation.MusicalStringToMusicNote.FrequencyRangeGeneration;
+using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord.FrequencyRangeGeneration;
 
-namespace MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
+namespace MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
 
 public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 {

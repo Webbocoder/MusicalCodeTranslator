@@ -1,8 +1,8 @@
 ﻿using MusicalCodeTranslator.App;
 using MusicalCodeTranslator.UserInteraction;
 using MusicalCodeTranslator.Translation.TextToMusicalString;
-using MusicalCodeTranslator.Translation.MusicalStringToMusicNote;
-using MusicalCodeTranslator.Translation.MusicalStringToMusicNote.FrequencyRangeGeneration;
+using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
+using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord.FrequencyRangeGeneration;
 using MusicalCodeTranslator.NotePlayback;
 
 var translatorConsolUserInteraction = new TranslatorConsoleUserInteraction();
