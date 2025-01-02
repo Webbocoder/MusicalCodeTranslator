@@ -18,7 +18,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 
     public List<MusicalWord> TranslateToMusicalWords(int tempoInBPM, string musicallyEncodedString, string originalText, bool preservePunctuationInOriginal)
     {
-        var frequencyCollection = _frequencyRangeGenerator.Generate(
+        var frequencyCollection = _frequencyRangeGenerator.GenerateEqualTemperament(
             SemitonePairsForAToA,
             DefaultStartingNoteFrequencyInHertz,
             AlphabetHelpers.LowercaseEnglishAlphabet.Length);

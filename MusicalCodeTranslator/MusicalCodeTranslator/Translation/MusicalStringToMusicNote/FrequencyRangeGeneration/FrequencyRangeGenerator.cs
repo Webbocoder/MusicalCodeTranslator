@@ -2,7 +2,7 @@
 
 public class FrequencyRangeGenerator : IFrequencyRangeGenerator
 {
-    public List<double> Generate(IEnumerable<int> semitonePairsForFirst8ve, double startingFrequency, int range)
+    public List<double> GenerateEqualTemperament(IEnumerable<int> semitonePairsForFirst8ve, double startingFrequency, int range)
     {
         var frequencies = new List<double>() { startingFrequency };
         double twelfthRootOf2 = Math.Pow(2, 1.0 / 12); // For increasing by a semitone.

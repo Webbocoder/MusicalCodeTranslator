@@ -2,5 +2,5 @@
 
 public interface IFrequencyRangeGenerator
 {
-    List<double> Generate(IEnumerable<int> semitonePairsForFirst8ve, double startingFrequency, int range);
+    List<double> GenerateEqualTemperament(IEnumerable<int> semitonePairsForFirst8ve, double startingFrequency, int range);
 }
