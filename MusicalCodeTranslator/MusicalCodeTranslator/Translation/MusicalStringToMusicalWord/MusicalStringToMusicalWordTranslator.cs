@@ -24,8 +24,8 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
             AlphabetHelpers.LowercaseEnglishAlphabet.Length);
 
         // Exclude punctuation (for now).
-        var musicallyEncodedWords = FilterOutNonMusicalWords(musicallyEncodedString);
-        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : FilterOutNonMusicalWords(originalText);
+        var musicallyEncodedWords = FilterOutExcessCharacters(musicallyEncodedString);
+        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : FilterOutExcessCharacters(originalText);
 
         List<MusicalWord> musicalWords = new List<MusicalWord>();
 
@@ -55,7 +55,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         return musicalWords;
     }
 
-    private string[] FilterOutNonMusicalWords(string musicallyEncodedString)
+    private string[] FilterOutExcessCharacters(string musicallyEncodedString)
     {
         var stringWithNoPunctation = string.Join("", musicallyEncodedString.Where(character => char.IsLetterOrDigit(character) || character == ' '));
         
