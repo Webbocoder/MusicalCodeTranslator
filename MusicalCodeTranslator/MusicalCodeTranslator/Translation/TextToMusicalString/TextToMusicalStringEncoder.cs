@@ -6,7 +6,7 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
     {
         return string.Join("", original.Select(character =>
         {
-            if (!AlphabetHelpers.LowercaseEnglishAlphabet.Contains(char.ToLower(character)))
+            if (!char.IsLetter(character))
             {
                 return character.ToString();
             }
