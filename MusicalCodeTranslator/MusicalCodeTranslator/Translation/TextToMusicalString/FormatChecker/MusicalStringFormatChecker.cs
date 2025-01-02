@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MusicalCodeTranslator.Translation.TextToMusicalString;
+namespace MusicalCodeTranslator.Translation.TextToMusicalString.FormatChecker;
 
 public class MusicalStringFormatChecker : IFormatChecker
 {
@@ -10,7 +10,7 @@ public class MusicalStringFormatChecker : IFormatChecker
         var stringWithNoSpacesNorPunctation = string.Join("", text.Where(char.IsLetterOrDigit));
 
         // Check that Length is even number. If not, return false. Check that each pair is a musicalLetter and digit.
-        if(!(stringWithNoSpacesNorPunctation.Length % 2 == 0) || !Regex.IsMatch(stringWithNoSpacesNorPunctation, "^([A-Za-z][0-9])*$")) // This only checks the format once the punctation is removed.
+        if (!(stringWithNoSpacesNorPunctation.Length % 2 == 0) || !Regex.IsMatch(stringWithNoSpacesNorPunctation, "^([A-Za-z][0-9])*$")) // This only checks the format once the punctation is removed.
             return false;
 
         for (int i = 0; i < text.Length; i++)

@@ -1,4 +1,4 @@
-﻿using MusicalCodeTranslator.Translation.TextToMusicalString;
+﻿using MusicalCodeTranslator.Translation.TextToMusicalString.Direction;
 
 namespace MusicalCodeTranslator.UserInteraction;
 

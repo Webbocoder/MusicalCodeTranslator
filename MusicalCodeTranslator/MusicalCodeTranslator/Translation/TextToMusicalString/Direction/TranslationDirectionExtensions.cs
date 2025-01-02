@@ -1,4 +1,4 @@
-﻿namespace MusicalCodeTranslator.Translation.TextToMusicalString;
+﻿namespace MusicalCodeTranslator.Translation.TextToMusicalString.Direction;
 
 public static class TranslationDirectionExtensions
 {

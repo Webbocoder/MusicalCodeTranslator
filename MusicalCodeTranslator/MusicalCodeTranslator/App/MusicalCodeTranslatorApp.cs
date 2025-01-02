@@ -2,6 +2,8 @@
 using MusicalCodeTranslator.NotePlayback;
 using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
 using MusicalCodeTranslator.Translation.TextToMusicalString;
+using MusicalCodeTranslator.Translation.TextToMusicalString.Direction;
+using MusicalCodeTranslator.Translation.TextToMusicalString.FormatChecker;
 using MusicalCodeTranslator.UserInteraction;
 
 namespace MusicalCodeTranslator.App;

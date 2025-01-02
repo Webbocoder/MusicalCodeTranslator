@@ -1,6 +1,7 @@
 ﻿using MusicalCodeTranslator.App;
 using MusicalCodeTranslator.UserInteraction;
 using MusicalCodeTranslator.Translation.TextToMusicalString;
+using MusicalCodeTranslator.Translation.TextToMusicalString.FormatChecker;
 using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord;
 using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord.FrequencyRangeGeneration;
 using MusicalCodeTranslator.NotePlayback;
