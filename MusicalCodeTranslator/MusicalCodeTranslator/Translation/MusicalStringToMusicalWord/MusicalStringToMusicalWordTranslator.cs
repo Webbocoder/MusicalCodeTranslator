@@ -23,7 +23,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
             DefaultStartingNoteFrequencyInHertz,
             AlphabetHelpers.LowercaseEnglishAlphabet.Length);
 
-        // Exclude punctuation (for now).
+        // Exclude punctuation (for now) and excess numbers.
         var musicallyEncodedWords = FilterOutExcessCharacters(musicallyEncodedString);
         var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : FilterOutExcessCharacters(originalText);
 
