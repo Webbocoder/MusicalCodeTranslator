@@ -15,3 +15,5 @@ var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     new WindowsConsoleMusicNotePlayer(translatorConsolUserInteraction));
 
 musicalCodeTranslatorApp.Run();
+
+// Adding comment to test pushing from within submodule.
