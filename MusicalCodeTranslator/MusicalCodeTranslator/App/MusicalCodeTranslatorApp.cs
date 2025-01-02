@@ -43,6 +43,7 @@ public class MusicalCodeTranslatorApp
             var stillEnteringTextToTranslate = false;
             string textToTranslate = default;
             string translation = default;
+            bool containsSomethingToHear = default;
 
             do
             {
@@ -62,7 +63,11 @@ public class MusicalCodeTranslatorApp
 
             } while (stillEnteringTextToTranslate);
 
-            if (direction == TranslationDirection.Encode && _userInteraction.AskYesNoQuestion("Would you like to hear your creation?"))
+            if(direction == TranslationDirection.Encode && !textToTranslate.Any(char.IsLetter))
+            {
+                _userInteraction.ShowMessage("It looks like the text your entered contained just numbers and/or punctuation. If you enter at least one letter, you'll have the option to hear it!");
+            }
+            else if (direction == TranslationDirection.Encode && _userInteraction.AskYesNoQuestion("Would you like to hear your creation?"))
             {
                 int tempoInBPM = DefaultTempoInBPM;
                 var usingDefaultTempo = _userInteraction.AskYesNoQuestion($"Would you like to use the default tempoInBPM of {DefaultTempoInBPM}bpm?");

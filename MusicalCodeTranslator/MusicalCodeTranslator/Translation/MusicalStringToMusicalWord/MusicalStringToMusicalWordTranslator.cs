@@ -24,8 +24,8 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
             AlphabetHelpers.LowercaseEnglishAlphabet.Length);
 
         // Exclude punctuation (for now).
-        var musicallyEncodedWords = TranslateToPunctuationlessArrayOfWords(musicallyEncodedString);
-        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : TranslateToPunctuationlessArrayOfWords(originalText);
+        var musicallyEncodedWords = FilterOutNonMusicalWords(musicallyEncodedString);
+        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : FilterOutNonMusicalWords(originalText);
 
         List<MusicalWord> musicalWords = new List<MusicalWord>();
 
@@ -55,9 +55,23 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         return musicalWords;
     }
 
-    private string[] TranslateToPunctuationlessArrayOfWords(string @string)
+    private string[] FilterOutNonMusicalWords(string musicallyEncodedString)
     {
-        return string.Join("", @string.Where(character => char.IsLetterOrDigit(character) || character == ' ')).Split(" ");
+        var stringWithNoPunctation = string.Join("", musicallyEncodedString.Where(character => char.IsLetterOrDigit(character) || character == ' '));
+        
+        string stringWithNoExcessNumbers = string.Empty;
+        for (int i = 1; i < stringWithNoPunctation.Length; ++i)
+        {
+            if (char.IsDigit(stringWithNoPunctation[i]) && !char.IsLetter(stringWithNoPunctation[i - 1]))
+            {
+                // If the current character is a digit and it is not immediately preceeded by a letter, exclude it from the result.
+                continue;
+            }
+
+            stringWithNoExcessNumbers += stringWithNoPunctation[i];
+        }
+
+        return stringWithNoExcessNumbers.Split(" ");
     }
 
     private double CalculateFrequency(char letter, int digit, List<double> frequencyCollection)
