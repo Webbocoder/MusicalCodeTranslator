@@ -82,7 +82,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         var noteFraction = 1.0;
         var oneBeatInMilliseconds = OneMinuteInMilliseconds / (tempoInBPM * noteFraction);
         var lengthOfOriginalWord = musicallyEncodedWord.Length / 2;
-        double duration = oneBeatInMilliseconds / lengthOfOriginalWord;
+        double duration = oneBeatInMilliseconds / lengthOfOriginalWord; // Every musical word will last the same amount of time, dividing the beat evenly by its original number of letters.
         return duration;
     }
 }
