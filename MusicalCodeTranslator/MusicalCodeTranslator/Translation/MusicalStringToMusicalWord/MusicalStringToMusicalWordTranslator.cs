@@ -60,9 +60,9 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         var stringWithNoPunctation = string.Join("", musicallyEncodedString.Where(character => char.IsLetterOrDigit(character) || character == ' '));
         
         string stringWithNoExcessNumbers = string.Empty;
-        for (int i = 1; i < stringWithNoPunctation.Length; ++i)
+        for (int i = 0; i < stringWithNoPunctation.Length; ++i)
         {
-            if (char.IsDigit(stringWithNoPunctation[i]) && !char.IsLetter(stringWithNoPunctation[i - 1]))
+            if (i != 0 && char.IsDigit(stringWithNoPunctation[i]) && !char.IsLetter(stringWithNoPunctation[i - 1]))
             {
                 // If the current character is a digit and it is not immediately preceeded by a letter, exclude it from the result.
                 continue;
