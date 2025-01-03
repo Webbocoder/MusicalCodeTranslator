@@ -25,7 +25,7 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 
         // Exclude punctuation (for now) and excess numbers.
         var musicallyEncodedWords = FilterOutExcessCharacters(musicallyEncodedString);
-        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : FilterOutExcessCharacters(originalText);
+        var originalWords = preservePunctuationInOriginal ? originalText.Split(" ") : RemovePunctuation(originalText).Split(" ");
 
         List<MusicalWord> musicalWords = new List<MusicalWord>();
 
@@ -57,21 +57,31 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
 
     private string[] FilterOutExcessCharacters(string musicallyEncodedString)
     {
-        var stringWithNoPunctation = string.Join("", musicallyEncodedString.Where(character => char.IsLetterOrDigit(character) || character == ' '));
-        
+        string stringWithNoPunctation = RemovePunctuation(musicallyEncodedString);
+        string stringWithNoExcessNumbers = RemoveExcessNumbers(stringWithNoPunctation);
+        return stringWithNoExcessNumbers.Split(" ");
+    }
+
+    private string RemovePunctuation(string @string)
+    {
+        return string.Join("", @string.Where(character => char.IsLetterOrDigit(character) || character == ' '));
+    }
+
+    private string RemoveExcessNumbers(string @string)
+    {
         string stringWithNoExcessNumbers = string.Empty;
-        for (int i = 0; i < stringWithNoPunctation.Length; ++i)
+        for (int i = 0; i < @string.Length; ++i)
         {
-            if (i != 0 && char.IsDigit(stringWithNoPunctation[i]) && !char.IsLetter(stringWithNoPunctation[i - 1]))
+            if (i != 0 && char.IsDigit(@string[i]) && !char.IsLetter(@string[i - 1]))
             {
                 // If the current character is a digit and it is not immediately preceeded by a letter, exclude it from the result.
                 continue;
             }
 
-            stringWithNoExcessNumbers += stringWithNoPunctation[i];
+            stringWithNoExcessNumbers += @string[i];
         }
 
-        return stringWithNoExcessNumbers.Split(" ");
+        return stringWithNoExcessNumbers;
     }
 
     private double CalculateFrequency(char letter, int digit, List<double> frequencyCollection)
