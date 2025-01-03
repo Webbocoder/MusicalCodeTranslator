@@ -72,9 +72,11 @@ public class MusicalStringToMusicalWordTranslator : IMusicalWordConstructor
         string stringWithNoExcessNumbers = string.Empty;
         for (int i = 0; i < @string.Length; ++i)
         {
-            if (i != 0 && char.IsDigit(@string[i]) && !char.IsLetter(@string[i - 1]))
+            if ((i == 0 && char.IsDigit(@string[i])) || (i != 0 && char.IsDigit(@string[i]) && !char.IsLetter(@string[i - 1])))
             {
-                // If the current character is a digit and it is not immediately preceeded by a letter, exclude it from the result.
+                // If the first character is not a letter (This might have to only apply if @string is the musicallyEncoded, as opposed to the originalText (CHECK THIS)), or
+                // If the current character is a digit and it is not immediately preceeded by a letter,
+                // exclude it from the result.
                 continue;
             }
 
