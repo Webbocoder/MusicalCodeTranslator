@@ -42,4 +42,10 @@ public class Testing
     //string decoded10 = TextToMusicalStringEncoder.Decode(transation10);
     //string decoded11 = TextToMusicalStringEncoder.Decode(transation11);
     //string decoded12 = TextToMusicalStringEncoder.Decode(transation12);
+
+    // Also tested decoding the following:
+    // wer3retgt
+    // a0 a1 a2 a3 a4 h hh hhh #';#';#
+    // a.3
+    // r3
 }
