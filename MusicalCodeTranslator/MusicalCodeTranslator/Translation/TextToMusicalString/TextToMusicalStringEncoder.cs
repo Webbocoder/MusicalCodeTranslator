@@ -1,7 +1,16 @@
-﻿namespace MusicalCodeTranslator.Translation.TextToMusicalString;
+﻿using MusicalCodeTranslator.Translation.TextToMusicalString.FormatChecker;
+
+namespace MusicalCodeTranslator.Translation.TextToMusicalString;
 
 public class TextToMusicalStringEncoder : IBiDirectionalTranslator
 {
+    private readonly IFormatChecker _formatChecker;
+
+    public TextToMusicalStringEncoder(IFormatChecker formatChecker)
+    {
+        _formatChecker = formatChecker;
+    }
+
     public string Encode(string original)
     {
         return string.Join("", original.Select(character =>
@@ -11,7 +20,7 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
                 return character.ToString();
             }
 
-            char[] alphabet = char.IsLower(character) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
+            char[] alphabet = DecideAlphabet(character);
 
             var index = Array.IndexOf(alphabet, character);
             var musicalLetter = alphabet[index % AlphabetHelpers.LengthOfMusicalAlphabet];
@@ -37,12 +46,13 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
             }
 
             var nextCharacter = original[counter + 1];
+            char[] alphabet = DecideAlphabet(currentCharacter);
+            char[] musicalAlphabet = alphabet.Take(7).ToArray();
 
-            if (char.IsLetter(currentCharacter) && char.IsDigit(nextCharacter))
+            if (_formatChecker.IsMusicallyEncodedCharacterPair(currentCharacter, nextCharacter))
             {
-                char[] alphabet = char.IsLower(currentCharacter) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
                 int digit = (int)char.GetNumericValue(nextCharacter);
-                int positionInMusicalAlphabet = Array.IndexOf(alphabet, currentCharacter); // positionInMusicalAlphabet == positionWithDigitAccountedFor as the musicalLetter will only be in range A to G.
+                int positionInMusicalAlphabet = Array.IndexOf(musicalAlphabet, currentCharacter);
                 var positionWithDigitAccountedFor = AlphabetHelpers.LengthOfMusicalAlphabet * digit + positionInMusicalAlphabet;
 
                 result.Add(alphabet[positionWithDigitAccountedFor].ToString());
@@ -57,5 +67,10 @@ public class TextToMusicalStringEncoder : IBiDirectionalTranslator
         }
 
         return string.Join("", result);
+    }
+
+    private char[] DecideAlphabet(char character)
+    {
+        return char.IsLower(character) ? AlphabetHelpers.LowercaseEnglishAlphabet : AlphabetHelpers.UppercaseEnglishAlphabet;
     }
 }

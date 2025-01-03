@@ -7,11 +7,12 @@ using MusicalCodeTranslator.Translation.MusicalStringToMusicalWord.FrequencyRang
 using MusicalCodeTranslator.NotePlayback;
 
 var translatorConsolUserInteraction = new TranslatorConsoleUserInteraction();
+var musicalStringFormatChecker = new MusicalStringFormatChecker();
 
 var musicalCodeTranslatorApp = new MusicalCodeTranslatorApp(
     translatorConsolUserInteraction,
-    new TextToMusicalStringEncoder(),
-    new MusicalStringFormatChecker(),
+    new TextToMusicalStringEncoder(musicalStringFormatChecker),
+    musicalStringFormatChecker,
     new MusicalStringToMusicalWordTranslator(new FrequencyRangeGenerator()),
     new WindowsConsoleMusicNotePlayer(translatorConsolUserInteraction));
 

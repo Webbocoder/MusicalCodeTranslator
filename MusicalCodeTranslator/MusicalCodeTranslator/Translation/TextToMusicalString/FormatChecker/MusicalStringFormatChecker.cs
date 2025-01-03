@@ -30,4 +30,13 @@ public class MusicalStringFormatChecker : IFormatChecker
 
         return true;
     }
+
+    public bool IsMusicallyEncodedCharacterPair(char leftCharacter, char rightCharacter)
+    {
+        return char.IsLetter(leftCharacter) &&
+               (char.IsLower(leftCharacter) ? AlphabetHelpers.LowercaseEnglishAlphabet.Take(7).Contains(leftCharacter)
+                                            : AlphabetHelpers.UppercaseEnglishAlphabet.Take(7).Contains(leftCharacter)) &&
+               char.IsDigit(rightCharacter) &&
+               rightCharacter >= '0' && rightCharacter <= '3';
+    }
 }
