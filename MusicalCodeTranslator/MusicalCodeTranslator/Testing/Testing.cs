@@ -54,4 +54,14 @@ public class Testing
     // I am 30
     // I am 30.
     // 234234jlk.';;
+
+    // Also:
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("!!!A1!!!")); //Should be True
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("A!!!1")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("!!!HIJ!!!")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("!!!123!!!")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("R3")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("A4")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("R!3")); //Should be False
+    //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("A!4")); //Should be False
 }
