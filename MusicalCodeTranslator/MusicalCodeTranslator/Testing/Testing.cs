@@ -65,5 +65,3 @@ public class Testing
     //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("R!3")); //Should be False
     //Console.WriteLine(musicalStringFormatChecker.IsMusicallyEncodedString("A!4")); //Should be False
 }
-
-// Testing push
